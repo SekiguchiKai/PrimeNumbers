@@ -3,7 +3,6 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-// これだとかなり冗長で速度が遅い
 public class Main {
 
     public static void main(String[] args) {
@@ -27,16 +26,24 @@ public class Main {
     }
 
     private static boolean isPrimeNumber(int targetNumber) {
-        int counter = 0;
-        for (int i = 1; i <= targetNumber; i++) {
-            if (targetNumber % i == 0) {
-                counter++;
+        // 2は素数
+        if (targetNumber == 2) {
+            return true;
+        } else if (targetNumber % 2 == 0) {
+            // 2以外の偶数は必ず、合成数
+            return false;
+        } else {
+            int i = 3;
+            // 自然数は自身の平方根以下の1以外の約数(割り切れるやつ)をもたなければ、素数であるから
+            while (i <= Math.sqrt(targetNumber)) {
+                if (targetNumber % i == 0) {
+                    return false;
+                }
+                // 偶数にならないように
+                i = i + 2;
             }
         }
-        // 1と自分しかない
-        if (counter == 2) {
-            return true;
-        }
-        return false;
+        return true;
     }
+
 }
